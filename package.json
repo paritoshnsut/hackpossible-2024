@@ -1,4 +1,5 @@
 {
+  "homepage": "https://paritoshnsut.github.io/hackpossible-2024",
   "name": "cargoes-runner",
   "version": "1.0.0",
   "description": "",
@@ -15,7 +16,9 @@
     "mock-server": "node mockServer/server.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build" 
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -90,6 +93,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "express": "^4.17.3",
     "file-loader": "^6.2.0",
+    "gh-pages": "^6.1.1",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.4",
     "lint-staged": "^13.0.3",
