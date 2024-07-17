@@ -15,12 +15,13 @@ import { Typography, Button, Box } from '@mui/material';
 import LineGraph from '../components/LineGraph';
 // import { useGetReadingByIdQuery } from '../services/service';
 import SpinnerComponent from '../components/SpinnerComponent';
-import { Modal } from 'react-bootstrap';
+import { Image, Modal } from 'react-bootstrap';
 import InfoIcon from '@mui/icons-material/Info';
 import Card from 'react-bootstrap/Card';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MapComponent from '../components/Mapcomponent';
 import { useFetchReadingById } from '../apis/hooks';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 const drawerWidth = 240;
 
@@ -143,25 +144,28 @@ const Details = () => {
           <AppBar
             position="fixed"
             sx={{
-              width: { sm: `calc(100% - ${drawerWidth}px)` },
-              ml: { sm: `${drawerWidth}px` },
-              backgroundColor: '#4caf50'
+              backgroundColor: '#1E1450'
+              // width: { sm: `calc(100% - ${drawerWidth}px)` },
+              // ml: { sm: `${drawerWidth}px` },
+              // backgroundColor: '#4caf50'
             }}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ mr: 2, display: { sm: 'none' } }}>
-                <MenuIcon />
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ marginLeft: '10px' }}
+              style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <IconButton size="large" edge="start" color="inherit" aria-label="menu">
+                <Image src={'/image.png'} alt={''} width={48} height={32} />
               </IconButton>
-              <Typography variant="h6" noWrap component="div">
-                DEVICE DETAILS
-              </Typography>
-            </Toolbar>
+              <div style={{ borderRight: '1px solid gray', height: '40px' }} />
+              <div style={{ fontWeight: 600, marginLeft: '8px', lineHeight: '20px' }}>
+                <div style={{ fontSize: '20px' }}>RAKSHAK</div>
+                <div style={{ fontSize: '10px' }}>By DPWORLD</div>
+              </div>
+            </Typography>
           </AppBar>
-          <Box
+          {/* <Box
             component="nav"
             sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
             aria-label="mailbox folders">
@@ -198,7 +202,7 @@ const Details = () => {
               open>
               {drawer}
             </Drawer>
-          </Box>
+          </Box> */}
           <Box
             component="main"
             sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
@@ -207,6 +211,14 @@ const Details = () => {
               <div
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <Typography variant="h4" gutterBottom style={{ flexGrow: 1, textAlign: 'left' }}>
+                  <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    onClick={handleGoBackClick}>
+                    <ChevronLeftIcon style={{ width: 40, height: 40 }} />
+                  </IconButton>
                   Details of Device: {id}
                 </Typography>
                 <Button
