@@ -21,6 +21,7 @@ import Card from 'react-bootstrap/Card';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MapComponent from '../components/Mapcomponent';
 import { useFetchReadingById } from '../apis/hooks';
+import useFetchThresholdReading from '../apis/hooks';
 
 const drawerWidth = 240;
 
@@ -32,29 +33,92 @@ const Details = () => {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const alertData = [
-    { city: 'Delhi', latitude: 28.6139, longitude: 77.209, count: 50 },
-    { city: 'Mumbai', latitude: 19.076, longitude: 72.8777, count: 30 },
-    { city: 'Bangalore', latitude: 12.9716, longitude: 77.5946, count: 40 },
-    { city: 'Kolkata', latitude: 22.5726, longitude: 88.3639, count: 25 },
-    { city: 'Chennai', latitude: 13.0827, longitude: 80.2707, count: 35 }
-  ];
+  const [thresholdData, setThresholdData] = useState({
+    aqi: '',
+    temperature: '',
+    pressure: '',
+    humidity: ''
+  });
 
   // const { data, error, isLoading } = useGetReadingByIdQuery(id);
   const { data, error, isLoading } = useFetchReadingById(id);
+  const {
+    data: threshold,
+    error: thresholderror,
+    isLoading: thresholdLoading,
+    fetchData
+  } = useFetchThresholdReading(id);
 
-  let theme = createTheme({});
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  theme = createTheme(theme, {
-    palette: {
-      salmon: theme.palette.augmentColor({
-        color: {
-          main: '#FF5733'
-        },
-        name: 'salmon'
-      })
+  useEffect(() => {
+    if (threshold) {
+      setThresholdData({
+        aqi: threshold.aqiThresholdValue,
+        temperature: threshold.temperatureThresholdValue,
+        pressure: threshold.pressureThresholdValue,
+        humidity: threshold.humidityThresholdValue,
+      });
     }
-  });
+  }, [threshold]);
+
+  const thresholdLineForPressure = {
+    type: 'line',
+    yMin: thresholdData?.pressure,
+    yMax: thresholdData?.pressure,
+    borderColor: 'red',
+    borderWidth: 2,
+    borderDash: [6, 6],
+    label: {
+      content: 'Threshold',
+      enabled: true,
+      position: 'center'
+    }
+  };
+
+  const thresholdLineForAQI = {
+    type: 'line',
+    yMin: thresholdData?.aqi,
+    yMax: thresholdData?.aqi,
+    borderColor: 'red',
+    borderWidth: 2,
+    borderDash: [6, 6],
+    label: {
+      content: 'Threshold',
+      enabled: true,
+      position: 'center'
+    }
+  };
+
+  const thresholdLineForTemperature = {
+    type: 'line',
+    yMin: thresholdData?.temperature,
+    yMax: thresholdData?.temperature,
+    borderColor: 'red',
+    borderWidth: 2,
+    borderDash: [6, 6],
+    label: {
+      content: 'Threshold',
+      enabled: true,
+      position: 'center'
+    }
+  };
+
+  const thresholdLineForHumidity = {
+    type: 'line',
+    yMin: thresholdData?.humidity,
+    yMax: thresholdData?.humidity,
+    borderColor: 'red',
+    borderWidth: 2,
+    borderDash: [6, 6],
+    label: {
+      content: 'Threshold',
+      enabled: true,
+      position: 'center'
+    }
+  };
 
   useEffect(() => {
     if (error) {
@@ -99,7 +163,7 @@ const Details = () => {
     };
   };
 
-  const graphOptions = {
+  const graphOptionsPressure = {
     responsive: true,
     plugins: {
       legend: {
@@ -108,6 +172,65 @@ const Details = () => {
       title: {
         display: true,
         text: 'Line Chart'
+      },
+      annotation: {
+        annotations: {
+          threshold: thresholdLineForPressure
+        }
+      }
+    }
+  };
+
+  const graphOptionsTemperature = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top'
+      },
+      title: {
+        display: true,
+        text: 'Line Chart'
+      },
+      annotation: {
+        annotations: {
+          threshold: thresholdLineForTemperature
+        }
+      }
+    }
+  };
+
+  const graphOptionsHumidity = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top'
+      },
+      title: {
+        display: true,
+        text: 'Line Chart'
+      },
+      annotation: {
+        annotations: {
+          threshold: thresholdLineForHumidity
+        }
+      }
+    }
+  };
+
+  const graphOptionsAqi = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top'
+      },
+      title: {
+        display: true,
+        text: 'Line Chart'
+      },
+      annotation: {
+        annotations: {
+          threshold: thresholdLineForAQI
+        }
       }
     }
   };
@@ -133,155 +256,144 @@ const Details = () => {
   return (
     <>
       {/* {isLoading && <SpinnerComponent />} */}
-      <ThemeProvider theme={theme}>
-        <Box sx={{ display: 'flex' }}>
-          <CssBaseline />
-          <AppBar
-            position="fixed"
-            sx={{
-              width: { sm: `calc(100% - ${drawerWidth}px)` },
-              ml: { sm: `${drawerWidth}px` },
-              backgroundColor: '#4caf50'
-            }}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ mr: 2, display: { sm: 'none' } }}>
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" noWrap component="div">
-                DEVICE DETAILS
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <Box
-            component="nav"
-            sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-            aria-label="mailbox folders">
-            <Drawer
-              variant="temporary"
-              open={mobileOpen}
-              onTransitionEnd={handleDrawerTransitionEnd}
-              onClose={handleDrawerClose}
-              ModalProps={{
-                keepMounted: true
-              }}
-              sx={{
-                display: { xs: 'block', sm: 'none' },
-                '& .MuiDrawer-paper': {
-                  boxSizing: 'border-box',
-                  width: drawerWidth,
-                  backgroundColor: '#333',
-                  color: '#fff'
-                }
-              }}>
-              {drawer}
-            </Drawer>
-            <Drawer
-              variant="permanent"
-              sx={{
-                display: { xs: 'none', sm: 'block' },
-                '& .MuiDrawer-paper': {
-                  boxSizing: 'border-box',
-                  width: drawerWidth,
-                  backgroundColor: '#333',
-                  color: '#fff'
-                }
-              }}
-              open>
-              {drawer}
-            </Drawer>
-          </Box>
-          <Box
-            component="main"
-            sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
-            <Toolbar />
-            <div>
-              <div
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Typography variant="h4" gutterBottom style={{ flexGrow: 1, textAlign: 'left' }}>
-                  Details of Device: {id}
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="error"
-                  style={{ fontWeight: 'bold' }}
-                  onClick={handleShowModal}>
-                  Check Average Data
-                </Button>
-              </div>
-              {/* {isLoading && <p>Loading...</p>}
-              {error && <p>Error loading data</p>} */}
-              {data && (
-                <>
-                  <div
-                    style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-                    <div
-                      style={{
-                        flex: '1 1 45%',
-                        padding: '10px',
-                        border: '1px solid #ccc',
-                        margin: '10px'
-                      }}>
-                      <Typography variant="h6">VOC Graph</Typography>
-                      <LineGraph data={formatGraphData(data.aqiGraph)} options={graphOptions} />
-                    </div>
-                    <div
-                      style={{
-                        flex: '1 1 45%',
-                        padding: '10px',
-                        border: '1px solid #ccc',
-                        margin: '10px'
-                      }}>
-                      <Typography variant="h6">Pressure Graph</Typography>
-                      <LineGraph
-                        data={formatGraphData(data.pressureGraph)}
-                        options={graphOptions}
-                      />
-                    </div>
-                  </div>
-                  <div
-                    style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-                    <div
-                      style={{
-                        flex: '1 1 45%',
-                        padding: '10px',
-                        border: '1px solid #ccc',
-                        margin: '10px'
-                      }}>
-                      <Typography variant="h6">Temperature Graph</Typography>
-                      <LineGraph
-                        data={formatGraphData(data.temperatureGraph)}
-                        options={graphOptions}
-                      />
-                    </div>
-                    <div
-                      style={{
-                        flex: '1 1 45%',
-                        padding: '10px',
-                        border: '1px solid #ccc',
-                        margin: '10px'
-                      }}>
-                      <Typography variant="h6">Humidity Graph</Typography>
-                      <LineGraph
-                        data={formatGraphData(data.humidityGraph)}
-                        options={graphOptions}
-                      />
-                    </div>
-                  </div>
 
-                  <div>
-                    {/* <MapComponent alerts={alertData} /> */}
-                  </div>
-                </>
-              )}
-            </div>
-          </Box>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          sx={{
+            width: { sm: `calc(100% - ${drawerWidth}px)` },
+            ml: { sm: `${drawerWidth}px` },
+            backgroundColor: '#4caf50'
+          }}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'none' } }}>
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              DEVICE DETAILS
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Box
+          component="nav"
+          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+          aria-label="mailbox folders">
+          <Drawer
+            variant="temporary"
+            open={mobileOpen}
+            onTransitionEnd={handleDrawerTransitionEnd}
+            onClose={handleDrawerClose}
+            ModalProps={{
+              keepMounted: true
+            }}
+            sx={{
+              display: { xs: 'block', sm: 'none' },
+              '& .MuiDrawer-paper': {
+                boxSizing: 'border-box',
+                width: drawerWidth,
+                backgroundColor: '#333',
+                color: '#fff'
+              }
+            }}>
+            {drawer}
+          </Drawer>
+          <Drawer
+            variant="permanent"
+            sx={{
+              display: { xs: 'none', sm: 'block' },
+              '& .MuiDrawer-paper': {
+                boxSizing: 'border-box',
+                width: drawerWidth,
+                backgroundColor: '#333',
+                color: '#fff'
+              }
+            }}
+            open>
+            {drawer}
+          </Drawer>
         </Box>
-      </ThemeProvider>
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+          <Toolbar />
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Typography variant="h4" gutterBottom style={{ flexGrow: 1, textAlign: 'left' }}>
+                Details of Device: {id}
+              </Typography>
+              <Button
+                variant="contained"
+                color="error"
+                style={{ fontWeight: 'bold' }}
+                onClick={handleShowModal}>
+                Check Average Data
+              </Button>
+            </div>
+            {/* {isLoading && <p>Loading...</p>}
+              {error && <p>Error loading data</p>} */}
+            {data && (
+              <>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                  <div
+                    style={{
+                      flex: '1 1 45%',
+                      padding: '10px',
+                      border: '1px solid #ccc',
+                      margin: '10px'
+                    }}>
+                    <Typography variant="h6">AQI Graph</Typography>
+                    <LineGraph data={formatGraphData(data.aqiGraph)} options={graphOptionsAqi} />
+                  </div>
+                  <div
+                    style={{
+                      flex: '1 1 45%',
+                      padding: '10px',
+                      border: '1px solid #ccc',
+                      margin: '10px'
+                    }}>
+                    <Typography variant="h6">Pressure Graph</Typography>
+                    <LineGraph data={formatGraphData(data.pressureGraph)} options={graphOptionsPressure} />
+                  </div>
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                  <div
+                    style={{
+                      flex: '1 1 45%',
+                      padding: '10px',
+                      border: '1px solid #ccc',
+                      margin: '10px'
+                    }}>
+                    <Typography variant="h6">Temperature Graph</Typography>
+                    <LineGraph
+                      data={formatGraphData(data.temperatureGraph)}
+                      options={graphOptionsTemperature}
+                    />
+                  </div>
+                  <div
+                    style={{
+                      flex: '1 1 45%',
+                      padding: '10px',
+                      border: '1px solid #ccc',
+                      margin: '10px'
+                    }}>
+                    <Typography variant="h6">Humidity Graph</Typography>
+                    <LineGraph data={formatGraphData(data.humidityGraph)} options={graphOptionsHumidity} />
+                  </div>
+                </div>
+
+                <div>{/* <MapComponent alerts={alertData} /> */}</div>
+              </>
+            )}
+          </div>
+        </Box>
+      </Box>
+
       <Modal show={showModal} onHide={handleCloseModal} centered size="lg">
         <Modal.Header
           closeButton

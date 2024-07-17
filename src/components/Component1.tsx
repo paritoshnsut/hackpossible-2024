@@ -97,13 +97,13 @@ const Component1 = () => {
             backgroundColor: 'rgba(75,192,192,0.4)',
             borderColor: 'rgba(75,192,192,1)'
           },
-          {
-            label: 'Pressure',
-            data: meandata1?.pressureGraph.map((item: { value: any }) => item.value),
-            fill: false,
-            backgroundColor: 'rgba(153,102,255,0.4)',
-            borderColor: 'rgba(153,102,255,1)'
-          },
+          // {
+          //   label: 'Pressure',
+          //   data: meandata1?.pressureGraph.map((item: { value: any }) => item.value),
+          //   fill: false,
+          //   backgroundColor: 'rgba(153,102,255,0.4)',
+          //   borderColor: 'rgba(153,102,255,1)'
+          // },
           {
             label: 'AQI',
             data: meandata1?.aqiGraph.map((item: { value: any }) => item.value),

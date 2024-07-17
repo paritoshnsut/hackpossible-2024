@@ -10,27 +10,35 @@ import { Typography, Button, Box } from '@mui/material';
 import { useGetReadingsQuery } from '../services/service';
 import { useEffect } from 'react';
 import SpinnerComponent from './SpinnerComponent';
-
+import { useFetchReadings } from '../apis/hooks';
+import { useState } from 'react';
+import '../common.css';
 const Component3 = ({ handleRowClick }: any) => {
-  const { data: rd, isLoading, isError, isSuccess } = useGetReadingsQuery({});
+  // const { data: rd, isLoading, isError, isSuccess } = useGetReadingsQuery({});
+
+  const { data: rd, error, isLoading } = useFetchReadings();
+  const [countdown, setCountdown] = useState(5);
 
   useEffect(() => {
-    if (isSuccess) {
-      console.log('Readings Data:', rd);
-    } else if (isError) {
-      console.error('Error fetching readings data');
+    let timer: any;
+    if (countdown > 0) {
+      timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+    } else {
+      timer = setTimeout(() => setCountdown(5), 1000);
     }
-  }, [rd, isSuccess, isError]);
+    return () => clearTimeout(timer);
+  }, [countdown]);
 
   return (
     <>
-      {isLoading && <SpinnerComponent />}
+      {/* {isLoading && <SpinnerComponent />} */}
 
       <Box sx={{ border: '1px solid #ccc', margin: 8, padding: 2 }}>
         <div className="wrapper-table">
           <div className="centered">
             <h5 className="heading ml-3"> Current Reading </h5>
           </div>
+
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>

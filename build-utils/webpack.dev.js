@@ -55,7 +55,7 @@ const config = {
     ]
   },
   devServer: {
-    // port: 4000,
+    port: 4000,
     historyApiFallback: true
   },
   plugins: [
