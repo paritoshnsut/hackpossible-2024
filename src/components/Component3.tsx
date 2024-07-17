@@ -101,13 +101,13 @@ const Component3 = ({ handleRowClick }: any) => {
                       sx={{
                         '&:last-child td, &:last-child th': { border: 0 },
                         backgroundColor:
-                          row.sosAlert && index === 0
+                          row.sosAlert //&&index == 0 
                             ? '#ffcccc'
                             : index % 2 === 0
                             ? '#f5f5f5'
                             : 'inherit', // Red background for SOS alert on first row
                         '&:hover': {
-                          backgroundColor: row.sosAlert && index === 0 ? '#ff9999' : '#e0e0e0' // Darker red on hover if SOS alert
+                          backgroundColor: row.sosAlert ? '#ff9999' : '#e0e0e0' // Darker red on hover if SOS alert
                         }
                       }}
                       onClick={() => handleRowClick(row?.id)}>
