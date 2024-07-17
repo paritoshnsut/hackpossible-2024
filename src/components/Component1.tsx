@@ -277,7 +277,7 @@ const Component1 = () => {
 
   return (
     <>
-      <Box sx={{ border: '1px solid #ccc', margin: 6, padding: 2 }}>
+      <Box sx={{}}>
         <div className="heading-flex">
           <div className="heading-left">
             <h5
@@ -311,7 +311,11 @@ const Component1 = () => {
         <div className="wrapper-graph">
           <div className="left">
             <Typography variant="h6">Humidity Graph</Typography>
-            {humidityData ? <LineGraph data={humidityData} options={optionsMain} /> : <SpinnerComponent />}
+            {humidityData ? (
+              <LineGraph data={humidityData} options={optionsMain} />
+            ) : (
+              <SpinnerComponent />
+            )}
           </div>
           <div className="right">
             <Typography variant="h6">Temperature Graph</Typography>
