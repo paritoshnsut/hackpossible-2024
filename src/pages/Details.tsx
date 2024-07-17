@@ -15,12 +15,13 @@ import { Typography, Button, Box } from '@mui/material';
 import LineGraph from '../components/LineGraph';
 // import { useGetReadingByIdQuery } from '../services/service';
 import SpinnerComponent from '../components/SpinnerComponent';
-import { Modal } from 'react-bootstrap';
+import { Image, Modal } from 'react-bootstrap';
 import InfoIcon from '@mui/icons-material/Info';
 import Card from 'react-bootstrap/Card';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MapComponent from '../components/Mapcomponent';
 import { useFetchReadingById } from '../apis/hooks';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import useFetchThresholdReading from '../apis/hooks';
 
 const drawerWidth = 240;
@@ -256,86 +257,98 @@ const Details = () => {
   return (
     <>
       {/* {isLoading && <SpinnerComponent />} */}
-
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          sx={{
-            width: { sm: `calc(100% - ${drawerWidth}px)` },
-            ml: { sm: `${drawerWidth}px` },
-            backgroundColor: '#4caf50'
-          }}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: 'none' } }}>
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              DEVICE DETAILS
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Box
-          component="nav"
-          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-          aria-label="mailbox folders">
-          <Drawer
-            variant="temporary"
-            open={mobileOpen}
-            onTransitionEnd={handleDrawerTransitionEnd}
-            onClose={handleDrawerClose}
-            ModalProps={{
-              keepMounted: true
-            }}
+      <ThemeProvider theme={theme}>
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <AppBar
+            position="fixed"
             sx={{
-              display: { xs: 'block', sm: 'none' },
-              '& .MuiDrawer-paper': {
-                boxSizing: 'border-box',
-                width: drawerWidth,
-                backgroundColor: '#333',
-                color: '#fff'
-              }
+              backgroundColor: '#1E1450'
+              // width: { sm: `calc(100% - ${drawerWidth}px)` },
+              // ml: { sm: `${drawerWidth}px` },
+              // backgroundColor: '#4caf50'
             }}>
-            {drawer}
-          </Drawer>
-          <Drawer
-            variant="permanent"
-            sx={{
-              display: { xs: 'none', sm: 'block' },
-              '& .MuiDrawer-paper': {
-                boxSizing: 'border-box',
-                width: drawerWidth,
-                backgroundColor: '#333',
-                color: '#fff'
-              }
-            }}
-            open>
-            {drawer}
-          </Drawer>
-        </Box>
-        <Box
-          component="main"
-          sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
-          <Toolbar />
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Typography variant="h4" gutterBottom style={{ flexGrow: 1, textAlign: 'left' }}>
-                Details of Device: {id}
-              </Typography>
-              <Button
-                variant="contained"
-                color="error"
-                style={{ fontWeight: 'bold' }}
-                onClick={handleShowModal}>
-                Check Average Data
-              </Button>
-            </div>
-            {/* {isLoading && <p>Loading...</p>}
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ marginLeft: '10px' }}
+              style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <IconButton size="large" edge="start" color="inherit" aria-label="menu">
+                <Image src={'/image.png'} alt={''} width={48} height={32} />
+              </IconButton>
+              <div style={{ borderRight: '1px solid gray', height: '40px' }} />
+              <div style={{ fontWeight: 600, marginLeft: '8px', lineHeight: '20px' }}>
+                <div style={{ fontSize: '20px' }}>RAKSHAK</div>
+                <div style={{ fontSize: '10px' }}>By DPWORLD</div>
+              </div>
+            </Typography>
+          </AppBar>
+          {/* <Box
+            component="nav"
+            sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+            aria-label="mailbox folders">
+            <Drawer
+              variant="temporary"
+              open={mobileOpen}
+              onTransitionEnd={handleDrawerTransitionEnd}
+              onClose={handleDrawerClose}
+              ModalProps={{
+                keepMounted: true
+              }}
+              sx={{
+                display: { xs: 'block', sm: 'none' },
+                '& .MuiDrawer-paper': {
+                  boxSizing: 'border-box',
+                  width: drawerWidth,
+                  backgroundColor: '#333',
+                  color: '#fff'
+                }
+              }}>
+              {drawer}
+            </Drawer>
+            <Drawer
+              variant="permanent"
+              sx={{
+                display: { xs: 'none', sm: 'block' },
+                '& .MuiDrawer-paper': {
+                  boxSizing: 'border-box',
+                  width: drawerWidth,
+                  backgroundColor: '#333',
+                  color: '#fff'
+                }
+              }}
+              open>
+              {drawer}
+            </Drawer>
+          </Box> */}
+          <Box
+            component="main"
+            sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+            <Toolbar />
+            <div>
+              <div
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Typography variant="h4" gutterBottom style={{ flexGrow: 1, textAlign: 'left' }}>
+                  <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    onClick={handleGoBackClick}>
+                    <ChevronLeftIcon style={{ width: 40, height: 40 }} />
+                  </IconButton>
+                  Details of Device: {id}
+                </Typography>
+                <Button
+                  variant="contained"
+                  color="error"
+                  style={{ fontWeight: 'bold' }}
+                  onClick={handleShowModal}>
+                  Check Average Data
+                </Button>
+              </div>
+              {/* {isLoading && <p>Loading...</p>}
               {error && <p>Error loading data</p>} */}
             {data && (
               <>
