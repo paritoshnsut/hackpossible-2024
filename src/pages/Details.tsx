@@ -43,7 +43,11 @@ const Details = () => {
   // const { data, error, isLoading } = useGetReadingByIdQuery(id);
   const { data, error, isLoading } = useFetchReadingById(id);
 
-  let theme = createTheme({});
+  let theme = createTheme({
+    typography: {
+      fontFamily: 'Montserrat, Helvetica, Arial, sans-serif'
+    }
+  });
 
   theme = createTheme(theme, {
     palette: {
@@ -273,9 +277,7 @@ const Details = () => {
                     </div>
                   </div>
 
-                  <div>
-                    {/* <MapComponent alerts={alertData} /> */}
-                  </div>
+                  <div>{/* <MapComponent alerts={alertData} /> */}</div>
                 </>
               )}
             </div>

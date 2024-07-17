@@ -26,7 +26,7 @@ const Component3 = ({ handleRowClick }: any) => {
     <>
       {isLoading && <SpinnerComponent />}
 
-      <Box sx={{ border: '1px solid #ccc', margin: 8, padding: 2 }}>
+      <Box sx={{}}>
         <div className="wrapper-table">
           <div className="centered">
             <h5 className="heading ml-3"> Current Reading </h5>
