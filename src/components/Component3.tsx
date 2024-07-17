@@ -98,14 +98,10 @@ const Component3 = ({ handleRowClick }: any) => {
                   rd.map((row: any, index: any) => (
                     <TableRow
                       key={row.id}
+                      className={row.sosAlert ? 'blink' : ''}
                       sx={{
                         '&:last-child td, &:last-child th': { border: 0 },
-                        backgroundColor:
-                          row.sosAlert //&&index == 0 
-                            ? '#ffcccc'
-                            : index % 2 === 0
-                            ? '#f5f5f5'
-                            : 'inherit', // Red background for SOS alert on first row
+                        backgroundColor: index % 2 === 0 ? '#f5f5f5' : 'inherit',
                         '&:hover': {
                           backgroundColor: row.sosAlert ? '#ff9999' : '#e0e0e0' // Darker red on hover if SOS alert
                         }

@@ -87,8 +87,24 @@
 }
 
 .custom-margin-border {
-  margin-top: 65px; /* You can adjust this value to be within 40-50px */
+  margin-top: 25px; /* You can adjust this value to be within 40-50px */
   margin-left: 20px;
   margin-right: 20px;
   border: 1px solid black;
+}
+
+@keyframes blink {
+  0% {
+    background-color: #ffcccc;
+  }
+  50% {
+    background-color: #ff9999;
+  }
+  100% {
+    background-color: #ffcccc;
+  }
+}
+
+.blink {
+  animation: blink 1s infinite;
 }

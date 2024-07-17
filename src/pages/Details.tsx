@@ -38,7 +38,9 @@ const Details = () => {
     aqi: '',
     temperature: '',
     pressure: '',
-    humidity: ''
+    humidity: '',
+    VOC : '',
+    CO2 : '',
   });
 
   // const { data, error, isLoading } = useGetReadingByIdQuery(id);
@@ -57,10 +59,12 @@ const Details = () => {
   useEffect(() => {
     if (threshold) {
       setThresholdData({
-        aqi: threshold.aqiThresholdValue,
-        temperature: threshold.temperatureThresholdValue,
-        pressure: threshold.pressureThresholdValue,
-        humidity: threshold.humidityThresholdValue
+        aqi: threshold?.aqiThresholdValue,
+        temperature: threshold?.temperatureThresholdValue,
+        pressure: threshold?.pressureThresholdValue,
+        humidity: threshold?.humidityThresholdValue,
+        VOC: threshold?.vocThresholdValue,
+        CO2: threshold.co2
       });
     }
   }, [threshold]);
@@ -111,6 +115,34 @@ const Details = () => {
     type: 'line',
     yMin: thresholdData?.humidity,
     yMax: thresholdData?.humidity,
+    borderColor: 'red',
+    borderWidth: 2,
+    borderDash: [6, 6],
+    label: {
+      content: 'Threshold',
+      enabled: true,
+      position: 'center'
+    }
+  };
+
+  const thresholdLineForVOC = {
+    type: 'line',
+    yMin: thresholdData?.VOC,
+    yMax: thresholdData?.VOC,
+    borderColor: 'red',
+    borderWidth: 2,
+    borderDash: [6, 6],
+    label: {
+      content: 'Threshold',
+      enabled: true,
+      position: 'center'
+    }
+  };
+
+  const thresholdLineForCO2 = {
+    type: 'line',
+    yMin: thresholdData?.CO2,
+    yMax: thresholdData?.CO2,
     borderColor: 'red',
     borderWidth: 2,
     borderDash: [6, 6],
@@ -235,6 +267,44 @@ const Details = () => {
       }
     }
   };
+
+  const graphOptionsVOC = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top'
+      },
+      title: {
+        display: true,
+        text: 'Line Chart'
+      },
+      annotation: {
+        annotations: {
+          threshold: thresholdLineForVOC
+        }
+      }
+    }
+  };
+
+  const graphOptionsCO2 = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top'
+      },
+      title: {
+        display: true,
+        text: 'Line Chart'
+      },
+      annotation: {
+        annotations: {
+          threshold: thresholdLineForCO2
+        }
+      }
+    }
+  };
+
+
 
   const drawer = (
     <div style={{ backgroundColor: '#333', color: '#fff', height: '100%' }}>
@@ -401,6 +471,34 @@ const Details = () => {
                     <LineGraph
                       data={formatGraphData(data.humidityGraph)}
                       options={graphOptionsHumidity}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      flex: '1 1 45%',
+                      padding: '10px',
+                      border: '1px solid #ccc',
+                      margin: '10px'
+                    }}>
+                    <Typography variant="h6">VOC Graph</Typography>
+                    <LineGraph
+                      data={formatGraphData(data.vocGraph)}
+                      options={graphOptionsVOC}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      flex: '1 1 45%',
+                      padding: '10px',
+                      border: '1px solid #ccc',
+                      margin: '10px'
+                    }}>
+                    <Typography variant="h6">CO2 Graph</Typography>
+                    <LineGraph
+                      data={formatGraphData(data.co2Graph)}
+                      options={graphOptionsCO2}
                     />
                   </div>
                 </div>
