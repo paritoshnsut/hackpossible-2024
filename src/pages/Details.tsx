@@ -92,11 +92,19 @@ const Details = () => {
     }
   };
 
-  let theme = createTheme({
-    typography: {
-      fontFamily: 'Montserrat, Helvetica, Arial, sans-serif'
+  const thresholdLineForTemperature = {
+    type: 'line',
+    yMin: thresholdData?.temperature,
+    yMax: thresholdData?.temperature,
+    borderColor: 'red',
+    borderWidth: 2,
+    borderDash: [6, 6],
+    label: {
+      content: 'Threshold',
+      enabled: true,
+      position: 'center'
     }
-  });
+  };
 
   const thresholdLineForHumidity = {
     type: 'line',
@@ -377,14 +385,15 @@ const Details = () => {
                     <Typography variant="h6">Humidity Graph</Typography>
                     <LineGraph data={formatGraphData(data.humidityGraph)} options={graphOptionsHumidity} />
                   </div>
+                </div>
 
-                  <div>{/* <MapComponent alerts={alertData} /> */}</div>
-                </>
-              )}
-            </div>
-          </Box>
+                <div>{/* <MapComponent alerts={alertData} /> */}</div>
+              </>
+            )}
+          </div>
         </Box>
-      </ThemeProvider>
+      </Box>
+
       <Modal show={showModal} onHide={handleCloseModal} centered size="lg">
         <Modal.Header
           closeButton
