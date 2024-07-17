@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import fetchReadingById from '.';
+import { fetchReadingById , fetchHeatmapData } from '.';
 
-const useFetchReadingById = (id: string | undefined) => {
+export const useFetchReadingById = (id: string | undefined) => {
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,7 +23,7 @@ const useFetchReadingById = (id: string | undefined) => {
     };
 
     fetchData(); 
-    interval = setInterval(fetchData, 200000);
+    interval = setInterval(fetchData, 3000);
 
     return () => clearInterval(interval); 
   }, [id]);
@@ -31,4 +31,25 @@ const useFetchReadingById = (id: string | undefined) => {
   return { data, error, isLoading };
 };
 
-export default useFetchReadingById;
+export const useHeatmapData = () => {
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const loadHeatmapData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await fetchHeatmapData();
+      setData(result);
+    } catch (err) {
+      console.log('pk' , err)
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { data, loading, error, loadHeatmapData };
+};
+
+

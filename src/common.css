@@ -85,18 +85,10 @@
   display: flex;
   justify-content: space-between;
 }
-/* 
 
- .content-box {
-  margin-right: 0;
-  margin-left: 0;
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px;
+.custom-margin-border {
+  margin-top: 65px; /* You can adjust this value to be within 40-50px */
+  margin-left: 20px;
+  margin-right: 20px;
+  border: 1px solid black;
 }
-
-.button-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-} */

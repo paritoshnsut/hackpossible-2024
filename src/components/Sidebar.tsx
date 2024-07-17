@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography';
 import AddchartIcon from '@mui/icons-material/Addchart';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import InfoIcon from '@mui/icons-material/Info';
+import FactoryIcon from '@mui/icons-material/Factory';
 
 const drawerWidth = 240;
 
@@ -62,13 +63,22 @@ const Sidebar = ({ handleItemClick, window, children }: Props) => {
               <ListItemText primary="Graph Section" />
             </ListItemButton>
           </ListItem>
-       
+
           <ListItem disablePadding onClick={() => handleItemClick(1)}>
             <ListItemButton>
               <ListItemIcon sx={{ color: '#fff' }}>
                 <TableChartIcon />
               </ListItemIcon>
               <ListItemText primary="Tabular Section" />
+            </ListItemButton>
+          </ListItem>
+
+          <ListItem disablePadding onClick={() => handleItemClick(2)}>
+            <ListItemButton>
+              <ListItemIcon sx={{ color: '#fff' }}>
+                <FactoryIcon />
+              </ListItemIcon>
+              <ListItemText primary="All Warehouse Details" />
             </ListItemButton>
           </ListItem>
         </>
@@ -113,7 +123,7 @@ const Sidebar = ({ handleItemClick, window, children }: Props) => {
           onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
           ModalProps={{
-            keepMounted: true // Better open performance on mobile.
+            keepMounted: true
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },

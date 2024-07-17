@@ -19,8 +19,8 @@ import { Modal } from 'react-bootstrap';
 import InfoIcon from '@mui/icons-material/Info';
 import Card from 'react-bootstrap/Card';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import useFetchReadingById from '../apis/hooks';
 import MapComponent from '../components/Mapcomponent';
+import { useFetchReadingById } from '../apis/hooks';
 
 const drawerWidth = 240;
 
@@ -132,7 +132,7 @@ const Details = () => {
 
   return (
     <>
-      {isLoading && <SpinnerComponent />}
+      {/* {isLoading && <SpinnerComponent />} */}
       <ThemeProvider theme={theme}>
         <Box sx={{ display: 'flex' }}>
           <CssBaseline />
@@ -213,8 +213,8 @@ const Details = () => {
                   Check Average Data
                 </Button>
               </div>
-              {isLoading && <p>Loading...</p>}
-              {error && <p>Error loading data</p>}
+              {/* {isLoading && <p>Loading...</p>}
+              {error && <p>Error loading data</p>} */}
               {data && (
                 <>
                   <div
@@ -274,8 +274,7 @@ const Details = () => {
                   </div>
 
                   <div>
-                    <MapComponent alerts={alertData} />
-                 
+                    {/* <MapComponent alerts={alertData} /> */}
                   </div>
                 </>
               )}

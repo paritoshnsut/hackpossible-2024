@@ -87,7 +87,7 @@ const Component1 = () => {
     if (meanSuccess) {
       const normalCombinedData = {
         labels: meandata1?.temperatureGraph.map((item: { date: any }) =>
-          new Date(item.date).toLocaleTimeString()
+          new Date(item.date).toLocaleDateString()
         ),
         datasets: [
           {
@@ -311,7 +311,7 @@ const Component1 = () => {
         <div className="wrapper-graph">
           <div className="left">
             <Typography variant="h6">Humidity Graph</Typography>
-            {humidityData ? <LineGraph data={trial} options={optionsMain} /> : <SpinnerComponent />}
+            {humidityData ? <LineGraph data={humidityData} options={optionsMain} /> : <SpinnerComponent />}
           </div>
           <div className="right">
             <Typography variant="h6">Temperature Graph</Typography>

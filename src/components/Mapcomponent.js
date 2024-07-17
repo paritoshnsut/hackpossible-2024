@@ -5,8 +5,8 @@ import 'leaflet/dist/leaflet.css';
 const MapComponent = ({ alerts }) => {
   const maxCount = Math.max(...alerts.map((alert) => alert.count));
   const baseRadius = 50000;
-  const indiaCenter = [20.5937, 78.9629];
-  const zoomLevel = 4;
+  const indiaCenter = [22.5937, 82.9629];
+  const zoomLevel = 5;
   return (
     <MapContainer center={indiaCenter} zoom={zoomLevel} style={{ height: '500px', width: '100%' }}>
       <TileLayer
