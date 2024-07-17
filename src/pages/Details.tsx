@@ -60,7 +60,7 @@ const Details = () => {
         aqi: threshold.aqiThresholdValue,
         temperature: threshold.temperatureThresholdValue,
         pressure: threshold.pressureThresholdValue,
-        humidity: threshold.humidityThresholdValue,
+        humidity: threshold.humidityThresholdValue
       });
     }
   }, [threshold]);
@@ -257,34 +257,34 @@ const Details = () => {
   return (
     <>
       {/* {isLoading && <SpinnerComponent />} */}
-      <ThemeProvider theme={theme}>
-        <Box sx={{ display: 'flex' }}>
-          <CssBaseline />
-          <AppBar
-            position="fixed"
-            sx={{
-              backgroundColor: '#1E1450'
-              // width: { sm: `calc(100% - ${drawerWidth}px)` },
-              // ml: { sm: `${drawerWidth}px` },
-              // backgroundColor: '#4caf50'
-            }}>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ marginLeft: '10px' }}
-              style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-              <IconButton size="large" edge="start" color="inherit" aria-label="menu">
-                <Image src={'/image.png'} alt={''} width={48} height={32} />
-              </IconButton>
-              <div style={{ borderRight: '1px solid gray', height: '40px' }} />
-              <div style={{ fontWeight: 600, marginLeft: '8px', lineHeight: '20px' }}>
-                <div style={{ fontSize: '20px' }}>RAKSHAK</div>
-                <div style={{ fontSize: '10px' }}>By DPWORLD</div>
-              </div>
-            </Typography>
-          </AppBar>
-          {/* <Box
+
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          sx={{
+            backgroundColor: '#1E1450'
+            // width: { sm: `calc(100% - ${drawerWidth}px)` },
+            // ml: { sm: `${drawerWidth}px` },
+            // backgroundColor: '#4caf50'
+          }}>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ marginLeft: '10px' }}
+            style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+            <IconButton size="large" edge="start" color="inherit" aria-label="menu">
+              <Image src={'/image.png'} alt={''} width={48} height={32} />
+            </IconButton>
+            <div style={{ borderRight: '1px solid gray', height: '40px' }} />
+            <div style={{ fontWeight: 600, marginLeft: '8px', lineHeight: '20px' }}>
+              <div style={{ fontSize: '20px' }}>RAKSHAK</div>
+              <div style={{ fontSize: '10px' }}>By DPWORLD</div>
+            </div>
+          </Typography>
+        </AppBar>
+        {/* <Box
             component="nav"
             sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
             aria-label="mailbox folders">
@@ -322,33 +322,32 @@ const Details = () => {
               {drawer}
             </Drawer>
           </Box> */}
-          <Box
-            component="main"
-            sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
-            <Toolbar />
-            <div>
-              <div
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Typography variant="h4" gutterBottom style={{ flexGrow: 1, textAlign: 'left' }}>
-                  <IconButton
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                    onClick={handleGoBackClick}>
-                    <ChevronLeftIcon style={{ width: 40, height: 40 }} />
-                  </IconButton>
-                  Details of Device: {id}
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="error"
-                  style={{ fontWeight: 'bold' }}
-                  onClick={handleShowModal}>
-                  Check Average Data
-                </Button>
-              </div>
-              {/* {isLoading && <p>Loading...</p>}
+        <Box
+          component="main"
+          sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+          <Toolbar />
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Typography variant="h4" gutterBottom style={{ flexGrow: 1, textAlign: 'left' }}>
+                <IconButton
+                  size="large"
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  onClick={handleGoBackClick}>
+                  <ChevronLeftIcon style={{ width: 40, height: 40 }} />
+                </IconButton>
+                Details of Device: {id}
+              </Typography>
+              <Button
+                variant="contained"
+                color="error"
+                style={{ fontWeight: 'bold' }}
+                onClick={handleShowModal}>
+                Check Average Data
+              </Button>
+            </div>
+            {/* {isLoading && <p>Loading...</p>}
               {error && <p>Error loading data</p>} */}
             {data && (
               <>
@@ -371,7 +370,10 @@ const Details = () => {
                       margin: '10px'
                     }}>
                     <Typography variant="h6">Pressure Graph</Typography>
-                    <LineGraph data={formatGraphData(data.pressureGraph)} options={graphOptionsPressure} />
+                    <LineGraph
+                      data={formatGraphData(data.pressureGraph)}
+                      options={graphOptionsPressure}
+                    />
                   </div>
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
@@ -396,7 +398,10 @@ const Details = () => {
                       margin: '10px'
                     }}>
                     <Typography variant="h6">Humidity Graph</Typography>
-                    <LineGraph data={formatGraphData(data.humidityGraph)} options={graphOptionsHumidity} />
+                    <LineGraph
+                      data={formatGraphData(data.humidityGraph)}
+                      options={graphOptionsHumidity}
+                    />
                   </div>
                 </div>
 
